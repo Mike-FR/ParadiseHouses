@@ -3,5 +3,6 @@ export class Property {
                 public category: string,
                 public surface: string,
                 public rooms: number,
-                public description: string) { }
+                public description: string,
+                public photo?: string) { }
 }

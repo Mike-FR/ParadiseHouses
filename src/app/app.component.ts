@@ -15,7 +15,7 @@ export class AppComponent {
       authDomain: 'paradisehouses-51ab4.firebaseapp.com',
       databaseURL: 'https://paradisehouses-51ab4.firebaseio.com',
       projectId: 'paradisehouses-51ab4',
-      storageBucket: '',
+      storageBucket: 'paradisehouses-51ab4.appspot.com',
       messagingSenderId: '504918622408',
       appId: '1:504918622408:web:ca293ccbd2ac724d'
     };
