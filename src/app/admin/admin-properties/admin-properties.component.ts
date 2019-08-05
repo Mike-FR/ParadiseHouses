@@ -17,8 +17,8 @@ export class AdminPropertiesComponent implements OnInit, OnDestroy {
   properties$: Subscription;
   editProperty = false;
   photoUploading = false;
-  photoUrl: string;
   photoUploaded = false;
+  photosAdded: any[];
 
   constructor(private fb: FormBuilder, private propertyService: PropertiesService) { }
 
@@ -47,6 +47,9 @@ export class AdminPropertiesComponent implements OnInit, OnDestroy {
   resetForm() {
     this.editProperty = false;
     this.propertyForm.reset();
+    this.photosAdded = [];
+    this.photoUploaded = false;
+    this.photoUploading = false;
   }
 
   onSaveProperty() {
@@ -56,10 +59,8 @@ export class AdminPropertiesComponent implements OnInit, OnDestroy {
     const surface = this.propertyForm.get('surface').value;
     const rooms = this.propertyForm.get('rooms').value;
     const description = this.propertyForm.get('description').value;
-    const newProperty = new Property(title, category, surface, rooms, description);
-    if (this.photoUrl && this.photoUrl !== '') {
-      newProperty.photo = this.photoUrl;
-    }
+    const photos = this.photosAdded ? this.photosAdded : [];
+    const newProperty = new Property(title, category, surface, rooms, description, photos);
 
     if (this.editProperty === true) {
       this.propertyService.updateProperties(newProperty, id);
@@ -69,15 +70,15 @@ export class AdminPropertiesComponent implements OnInit, OnDestroy {
 
     $('#propertiesFormModal').modal('hide');
     this.resetForm();
-    this.photoUploaded = false;
-    this.photoUrl = '';
   }
 
   onDeleteProperty(property: Property) {
-    this.propertyService.removeProperties(property);
-    if (property.photo) {
-      this.propertyService.removePropertyPhoto(property.photo);
+    if (property.photos) {
+      property.photos.forEach(photo => {
+        this.propertyService.removePropertyPhoto(photo);
+      });
     }
+    this.propertyService.removeProperties(property);
   }
 
   onEditProperty(property: Property, id: number) {
@@ -88,18 +89,29 @@ export class AdminPropertiesComponent implements OnInit, OnDestroy {
     this.propertyForm.get('surface').setValue(property.surface);
     this.propertyForm.get('rooms').setValue(property.rooms);
     this.propertyForm.get('description').setValue(property.description);
+    this.photosAdded = property.photos;
     this.editProperty = true;
   }
 
   detectFile(event) {
+    this.photoUploaded = false;
     this.photoUploading = true;
     this.propertyService.uploadFile(event.target.files[0]).then(
       (url: string) => {
-        this.photoUrl = url;
+        this.onAddPhoto(url);
         this.photoUploading = false;
         this.photoUploaded = true;
       }
     );
+  }
+
+  onAddPhoto(url: string) {
+    this.photosAdded.push(url);
+  }
+
+  onRemoveAddedPhoto(id: number) {
+    this.propertyService.removePropertyPhoto(this.photosAdded[id]);
+    this.photosAdded.splice(id, 1);
   }
 
   ngOnDestroy() {

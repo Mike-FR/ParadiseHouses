@@ -4,5 +4,5 @@ export class Property {
                 public surface: string,
                 public rooms: number,
                 public description: string,
-                public photo?: string) { }
+                public photos: any[]) { }
 }
