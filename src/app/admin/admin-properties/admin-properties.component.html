@@ -12,13 +12,15 @@
             <div class="row">
                 <div class="col-md-2">
                     <div class="w-100" *ngFor="let photos of property.photos; let first = first">
-                        <img *ngIf="first" src={{photos}} alt="property photo" style="width: 100px;">
+                        <img *ngIf="first" src={{photos}} alt="property photo" style="width: 150px;">
                     </div>
-                    <h4 *ngIf="!property.photos || property.photos.length === 0" class="font-weight-light">No picture</h4>
+                    <h4 *ngIf="!property.photos || property.photos.length === 0" class="font-weight-light">No picture
+                    </h4>
                 </div>
                 <div class="col-md-10">
+                    <h3 class="font-weight-normal pl-3">{{property.title}}</h3>
+                    <h4 class="font-weight-lighter pl-3">{{property.price | currency:"EUR":"symbol":'4.2-2':'fr'}}</h4>
                     <div class="row">
-                        <h3 class="font-weight-normal pl-3">{{property.title}}</h3>
                         <div class="ml-auto">
                             <button class="btn btn-primary m-1" (click)="onEditProperty(property, i)"><i
                                     class="fas fa-edit"></i></button>
@@ -45,13 +47,17 @@
                     <div class="form-group">
                         <input type="text" formControlName="title" id="title" placeholder="Title" class="form-control">
                     </div>
+                    <div class="form-group">
+                        <input type="number" formControlName="price" id="price" placeholder="Price (€)"
+                            class="form-control" min="0">
+                    </div>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <label for="category" class="input-group-text">Category</label>
                         </div>
-                        <select formControlName="category" id="categorhy" class="custom-select">
-                            <option value="appartment">Appartment</option>
-                            <option value="house">House</option>
+                        <select formControlName="category" id="category" class="custom-select">
+                            <option value="Appartment">Appartment</option>
+                            <option value="House">House</option>
                         </select>
                     </div>
                     <div class="form-group">

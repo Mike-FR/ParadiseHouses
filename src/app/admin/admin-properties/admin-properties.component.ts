@@ -40,7 +40,8 @@ export class AdminPropertiesComponent implements OnInit, OnDestroy {
       category: ['', Validators.required],
       surface: ['', Validators.required],
       rooms: ['', Validators.required],
-      description: ['']
+      description: [''],
+      price: ['', [Validators.required, Validators.min(1)]]
     });
   }
 
@@ -59,8 +60,9 @@ export class AdminPropertiesComponent implements OnInit, OnDestroy {
     const surface = this.propertyForm.get('surface').value;
     const rooms = this.propertyForm.get('rooms').value;
     const description = this.propertyForm.get('description').value;
+    const price = this.propertyForm.get('price').value;
     const photos = this.photosAdded ? this.photosAdded : [];
-    const newProperty = new Property(title, category, surface, rooms, description, photos);
+    const newProperty = new Property(title, category, surface, rooms, description, price, photos);
 
     if (this.editProperty === true) {
       this.propertyService.updateProperties(newProperty, id);
@@ -89,6 +91,7 @@ export class AdminPropertiesComponent implements OnInit, OnDestroy {
     this.propertyForm.get('surface').setValue(property.surface);
     this.propertyForm.get('rooms').setValue(property.rooms);
     this.propertyForm.get('description').setValue(property.description);
+    this.propertyForm.get('price').setValue(property.price);
     this.photosAdded = property.photos;
     this.editProperty = true;
   }

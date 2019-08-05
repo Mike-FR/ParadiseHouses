@@ -11,6 +11,12 @@ import { AdminPropertiesComponent } from './admin/admin-properties/admin-propert
 import { HomeComponent } from './home/home.component';
 import { SinglePropertyComponent } from './single-property/single-property.component';
 
+import { registerLocaleData } from '@angular/common';
+import localeFr from '@angular/common/locales/fr';
+
+// the second parameter 'fr' is optional
+registerLocaleData(localeFr, 'fr');
+
 @NgModule({
   declarations: [
     AppComponent,

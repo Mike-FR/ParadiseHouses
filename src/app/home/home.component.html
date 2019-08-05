@@ -4,15 +4,15 @@
         <hr class="mb-4 mt-2 bg-dark">
         <div class="row">
             <div *ngFor="let property of properties; let i = index" class="col-sm-12 col-md-6 col-lg-4">
-                <div class="bg-white w-100 shadow my-3">
+                <div class="bg-white w-100 shadow my-3 text-center">
                     <div *ngFor="let photos of property.photos; let first = first" class="w-100 my-auto">
                         <img *ngIf="first" src={{photos}} alt="property photo" class="w-100">
                     </div>
-                    <h3 class="font-weight-normal pt-3 pl-3 mb-0"></h3>
-                    <small class="pl-3">{{property.category}}, {{property.surface}} m², {{property.rooms}}
-                        rooms</small>
+                    <h3 class="font-weight-normal pt-3 pl-3 mb-3">{{property.title}}</h3>
+                    <h4 class="font-weight-light pl-3">{{property.price | currency:"EUR":"symbol":'4.2-2':'fr'}}</h4>
+                    <small class="pl-3">{{property.category}}, {{property.surface}} m², {{property.rooms}} rooms</small>
                     <div class="d-flex">
-                        <button class="btn btn-primary my-3 mx-auto" (click)="onViewProperty(i)">Details</button>
+                        <button class="btn btn-info my-3 mx-auto" (click)="onViewProperty(i)">See the details</button>
                     </div>
                 </div>
             </div>
