@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import * as firebase from 'firebase';
 import { Property } from '../models/Property.model';
 import { Subject } from 'rxjs';
+import { reject } from 'q';
 
 @Injectable({
   providedIn: 'root'
@@ -85,5 +86,22 @@ export class PropertiesService {
       });
     }
   }
+
+
+  getSingleProperty(id: number) {
+    return new Promise(
+      (resolve, reject) => {
+        firebase.database().ref('/properties/' + id).once('value').then(
+          (data) => {
+            resolve(data.val());
+          },
+          (error) => {
+            reject(error);
+          }
+        );
+      }
+    );
+  }
+
 
 }

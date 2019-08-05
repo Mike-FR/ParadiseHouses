@@ -1,1 +1,21 @@
-<p>home works!</p>
+<div class="bg-light">
+    <div class="container">
+        <h1 class="display-4 pt-5 mb-0">Our real estates</h1>
+        <hr class="mb-4 mt-2 bg-dark">
+        <div class="row">
+            <div *ngFor="let property of properties; let i = index" class="col-sm-12 col-md-6 col-lg-4">
+                <div class="bg-white w-100 shadow my-3">
+                    <div *ngFor="let photos of property.photos; let first = first" class="w-100 my-auto">
+                        <img *ngIf="first" src={{photos}} alt="property photo" class="w-100">
+                    </div>
+                    <h3 class="font-weight-normal pt-3 pl-3 mb-0"></h3>
+                    <small class="pl-3">{{property.category}}, {{property.surface}} m², {{property.rooms}}
+                        rooms</small>
+                    <div class="d-flex">
+                        <button class="btn btn-primary my-3 mx-auto" (click)="onViewProperty(i)">Details</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
